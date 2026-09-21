@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Penguin World</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ========================= -->
+    <!-- PENGUIN WORLD 大門 -->
+    <!-- ========================= -->
+
+    <div class="game-screen">
+
+        <div class="scene-container">
+
+            <!-- 大門 -->
+            <img
+                id="gate-image"
+                src="Image/企鵝世界 - 大門.png"
+                class="scene"
+                alt="Penguin World Gate"
+            >
+
+            <!-- 迎接企鵝 -->
+            <img
+                id="welcome-penguin"
+                src="Image/迎接企鵝.png"
+                class="welcome-penguin hidden-penguin"
+                alt="迎接企鵝"
+            >
+<!-- 迎接企鵝對話 -->
+<img
+    id="welcome-dialogue"
+    src="Image/welcoming - 1.png"
+    class="welcome-dialogue hidden-dialogue"
+    alt="迎接企鵝對話"
+>
+
+<!-- 我準備好啦 Button -->
+<img
+    id="ready-button"
+    src="Image/Im Ready!.png"
+    class="ready-button hidden-ready"
+    alt="我準備好啦"
+>
+
+<!-- Scanner 隱形 Hotspot -->
+<button
+    id="scanner"
+    class="hotspot"
+    aria-label="Scan Special Pass">
+</button>
+
+        </div>
+
+    </div>
+
+<!-- ========================= -->
+<!-- PENGUIN WORLD MAP -->
+<!-- ========================= -->
+
+<div id="map-screen" class="map-screen hidden-map">
+
+    <div class="map-container">
+
+        <!-- 地圖背景 -->
+        <img
+            id="map-background"
+            src="Image/企鵝世界地圖 背景.png"
+            class="map-background"
+            alt="企鵝世界地圖"
+        >
+
+        <!-- 地圖地點 Icons -->
+
+<img
+    id="council-icon"
+    src="Image/企鵝議會廳 - Icon.png"
+    class="map-icon council-icon"
+    alt="企鵝議會廳"
+>
+
+<img
+    id="ghost-icon"
+    src="Image/幽靈企鵝領地 - Icon.png"
+    class="map-icon ghost-icon"
+    alt="幽靈企鵝領地"
+>
+
+<img
+    id="spoiled-icon"
+    src="Image/任性企鵝領地 - Icon.png"
+    class="map-icon spoiled-icon"
+    alt="任性企鵝領地"
+>
+
+<img
+    id="mask-icon"
+    src="Image/面具企鵝領地 - Icon.png"
+    class="map-icon mask-icon"
+    alt="面具企鵝領地"
+>
+
+<img
+    id="security-icon"
+    src="Image/保安企鵝領地 - Icon.png"
+    class="map-icon security-icon"
+    alt="保安企鵝領地"
+>
+
+<img
+    id="researcher-icon"
+    src="Image/研究員企鵝領地 - Icon.png"
+    class="map-icon researcher-icon"
+    alt="研究員企鵝領地"
+>
+
+<img
+    id="dark-icon"
+    src="Image/暗黑企鵝領地 - Icon.png"
+    class="map-icon dark-icon"
+    alt="暗黑企鵝領地"
+>
+
+<img
+    id="corner-icon"
+    src="Image/角落企鵝領地 - Icon.png"
+    class="map-icon corner-icon"
+    alt="角落企鵝領地"
+>
+
+        <!-- 地圖介紹 -->
+        <img
+            id="map-dialogue"
+            src="Image/Map1.png"
+            class="map-dialogue"
+            alt="企鵝世界地圖介紹"
+        >
+
+      <!-- =========================
+     WELCOME PENGUIN HELP / RESET
+    ========================= -->
+
+<!-- 地圖右下角迎接企鵝 hotspot -->
+<div id="map-welcome-penguin-hotspot"
+     class="map-welcome-penguin-hotspot">
+</div>
+
+<div id="restart-menu" class="restart-menu">
+
+    <!-- 1. Help menu -->
+    <img src="Image/restart 1.png"
+         class="restart-panel restart-panel-1"
+         alt="重新探索選單">
+
+    <!-- 2. Warning -->
+    <img src="Image/restart 2.png"
+         class="restart-panel restart-panel-2"
+         alt="重新探索警告">
+
+    <!-- 3. Final confirmation -->
+    <img src="Image/restart 3.png"
+         class="restart-panel restart-panel-3"
+         alt="確認重新探索">
+
+    <!-- 第一頁 hotspots -->
+    <div class="restart-1-explore"></div>
+    <div class="restart-1-back"></div>
+
+    <!-- 第三頁 hotspots -->
+    <div class="restart-3-confirm"></div>
+    <div class="restart-3-back"></div>
+
+</div>
+    </div>
+
+</div>
+
+<!-- ======================== -->
+<!-- 任性企鵝領地 -->
+<!-- ======================== -->
+
+<div id="spoiled-land" class="land-screen hidden-land">
+
+    <div class="spoiled-land-container">
+
+        <!-- 背景 -->
+        <img
+            src="Image/任性企鵝領地 - 背景.png"
+            class="spoiled-land-background"
+            alt="任性企鵝領地"
+        >
+
+       <!-- 王座 -->
+<img
+    src="Image/任性企鵝領地 - 王座.png"
+    class="spoiled-item spoiled-throne"
+    alt="任性企鵝王座"
+>
+<!-- 王座對白 -->
+<img
+    id="spoiled-throne-dialogue"
+    class="spoiled-item-dialogue"
+    src="Image/王座 1.png"
+    alt="王座對白"
+>
+
+<!-- 遊樂區 -->
+<img
+    src="Image/任性企鵝領地 - 遊樂區.png"
+    class="spoiled-item spoiled-playground"
+    alt="任性企鵝遊樂區"
+>
+<!-- 遊樂區對白 -->
+<img
+    id="spoiled-playground-dialogue"
+    class="spoiled-item-dialogue"
+    src="Image/遊樂區1.png"
+    alt="遊樂區對白"
+>
+
+<!-- 休息區 -->
+<img
+    src="Image/任性企鵝領地 - 休息區.png"
+    class="spoiled-item spoiled-rest"
+    alt="任性企鵝休息區"
+>
+<!-- 休息區對白 -->
+<img
+    id="spoiled-rest-dialogue"
+    class="spoiled-item-dialogue"
+    src="Image/休息區1.png"
+    alt="休息區對白"
+>
+
+<!-- 「想要」商店 -->
+<img
+    src="Image/任性企鵝領地 - 「想要」商店.png"
+    class="spoiled-item spoiled-shop"
+    alt="任性企鵝想要商店"
+>
+<!-- 「想要」商店對白 -->
+<img
+    id="spoiled-shop-dialogue"
+    class="spoiled-item-dialogue"
+    src="Image/「想要」商店1.png"
+    alt="想要商店對白"
+>
+
+<!-- 創造混亂區 -->
+<img
+    src="Image/任性企鵝領地 - 創造混亂區.png"
+    class="spoiled-item spoiled-chaos"
+    alt="任性企鵝創造混亂區"
+>
+<!-- 混亂創造區對白 -->
+<img
+    id="spoiled-chaos-dialogue"
+    class="spoiled-item-dialogue"
+    src="Image/混亂創造區1.png"
+    alt="混亂創造區對白"
+>
+
+<!-- I WANT 牌 -->
+<img
+    src="Image/任性企鵝領地 - I WANT!!!.png"
+    class="spoiled-item spoiled-want-sign"
+    alt="I WANT!"
+>
+<!-- I WANT Random 彩蛋對話 -->
+<img
+    id="spoiled-want-dialogue"
+    class="spoiled-want-dialogue"
+    src="Image/I want 1.png"
+    alt="I WANT 彩蛋對話"
+>
+<div class="spoiled-want-hotspot"></div>
+
+<!-- 任性企鵝 -->
+<img
+    src="Image/任性企鵝.png"
+    class="spoiled-item spoiled-penguin"
+    alt="任性企鵝"
+>
+<!-- 任性企鵝 Random 對話 -->
+<img
+    id="spoiled-random-dialogue"
+    class="spoiled-random-dialogue"
+    src="Image/任性企鵝 speech1.png"
+    alt="任性企鵝 Random 對話"
+>
+
+<!-- 任性企鵝介紹對話 -->
+<img
+    id="spoiled-intro"
+    src="Image/任性企鵝intro1.png"
+    class="spoiled-intro"
+    alt="任性企鵝介紹"
+><button id="spoiled-back-map">← 返回地圖</button>
+    </div>
+
+</div>
+
+<!-- ====================== -->
+<!-- GHOST PENGUIN LAND -->
+<!-- ====================== -->
+
+<div id="ghost-land" class="land-screen hidden-land">
+
+    <div class="ghost-land-container">
+
+        <!-- 背景 -->
+        <img
+            src="Image/幽靈企鵝領地 - 背景.png"
+            class="ghost-land-background"
+            alt="幽靈企鵝領地"
+        >
+       
+        <img
+            src="Image/幽靈企鵝領地 - SHHHH.png"
+            class="ghost-shhh"
+            alt="SHHH Quiet Place"
+        >
+
+        <!-- SHHH 木牌 hotspot -->
+<div class="ghost-shhh-hotspot"></div>
+
+<!-- 幽靈企鵝領地木牌介紹 -->
+<img
+    id="ghost-intro"
+    class="ghost-intro"
+    src="Image/幽靈企鵝領地木牌介紹 1.png"
+    alt="幽靈企鵝領地木牌介紹"
+>
+
+        <!-- 石屋 -->
+<img
+    src="Image/幽靈企鵝領地 - 石屋.png"
+    class="ghost-house"
+    alt="幽靈企鵝石屋"
+>
+<!-- 石屋門 clickable hotspot -->
+<div class="ghost-door-hotspot"></div>
+<!-- 幽靈企鵝敲門互動素材 -->
+
+<img
+    src="Image/幽靈企鵝 石屋 1.png"
+    class="ghost-house-step ghost-house-step-1"
+    alt="Knock Knock"
+>
+
+<img
+    src="Image/幽靈企鵝 石屋 2.png"
+    class="ghost-house-step ghost-house-step-2"
+    alt="……"
+>
+
+<img
+    src="Image/幽靈企鵝 石屋 3.png"
+    class="ghost-house-step ghost-house-step-3"
+    alt="再叩一次"
+>
+
+<img
+    src="Image/幽靈企鵝 石屋 4.png"
+    class="ghost-house-step ghost-house-step-4"
+    alt="Knock Knock"
+>
+
+<!-- 幽靈企鵝 -->
+<img
+    src="Image/幽靈企鵝.png"
+    class="ghost-penguin"
+    alt="幽靈企鵝"
+    style="display: none;"
+>
+<!-- 幽靈企鵝：第一次對白 -->
+
+<img
+    src="Image/幽靈企鵝對白 1.1.png"
+    class="ghost-dialogue ghost-dialogue-1"
+    alt="幽靈企鵝對白 1.1"
+>
+
+<img
+    src="Image/幽靈企鵝對白 1.2.png"
+    class="ghost-dialogue ghost-dialogue-2"
+    alt="幽靈企鵝對白 1.2"
+>
+
+<img
+    src="Image/幽靈企鵝對白 1.3.png"
+    class="ghost-dialogue ghost-dialogue-3"
+    alt="幽靈企鵝對白 1.3"
+>
+
+<img
+    src="Image/幽靈企鵝對白 1.4.png"
+    class="ghost-dialogue ghost-dialogue-4"
+    alt="幽靈企鵝對白 1.4"
+>
+
+<img
+    src="Image/幽靈企鵝對白 1.5.png"
+    class="ghost-dialogue ghost-dialogue-5"
+    alt="幽靈企鵝對白 1.5"
+>
+
+<!-- 幽靈企鵝：返回地圖 -->
+<button class="ghost-return-map">
+    返回地圖(?)
+</button>
+
+
+<!-- 幽靈企鵝：第一次離開對白 -->
+<img
+    src="Image/幽靈企鵝對白 1 leaving.png"
+    class="ghost-dialogue ghost-leaving-1"
+    alt="幽靈企鵝離開對白"
+>
+
+<!-- 幽靈企鵝：第二次進入石屋 sequence -->
+
+<img src="Image/幽靈企鵝 石屋 2.1.png"
+     class="ghost-house-second-step ghost-house-second-step-1"
+     alt="Knock Knock">
+
+<img src="Image/幽靈企鵝 石屋 2.2.png"
+     class="ghost-house-second-step ghost-house-second-step-2"
+     alt="……">
+
+<img src="Image/幽靈企鵝 石屋 2.3.png"
+     class="ghost-house-second-step ghost-house-second-step-3"
+     alt="Knock Knock">
+
+<img src="Image/幽靈企鵝 石屋 2.4.png"
+     class="ghost-house-second-step ghost-house-second-step-4"
+     alt="……">
+
+<img src="Image/幽靈企鵝 石屋 2.5.png"
+     class="ghost-house-second-step ghost-house-second-step-5"
+     alt="選擇">
+
+     <!-- 2.5 選擇按鈕 hotspots -->
+<div class="ghost-choice-back"></div>
+<div class="ghost-choice-wait"></div>
+
+<img src="Image/幽靈企鵝 石屋 2.6.png"
+     class="ghost-knock-again"
+     alt="再叩一次">
+
+     <!-- 第三次叩門 -->
+<img src="Image/幽靈企鵝 石屋 2.7.png"
+     class="ghost-third-knock"
+     alt="Knock Knock">
+
+<!-- 第二次探訪：幽靈企鵝對白 -->
+<img src="Image/幽靈企鵝對白 2 .1 png.png"
+     class="ghost-second-dialogue ghost-second-dialogue-1"
+     alt="……">
+
+<img src="Image/幽靈企鵝對白 2.2.png"
+     class="ghost-second-dialogue ghost-second-dialogue-2"
+     alt="你……">
+
+<img src="Image/幽靈企鵝對白 2.3 .png"
+     class="ghost-second-dialogue ghost-second-dialogue-3"
+     alt="……">
+
+<img src="Image/幽靈企鵝對白 2.4.png"
+     class="ghost-second-dialogue ghost-second-dialogue-4"
+     alt="冇走到……">
+
+<img src="Image/幽靈企鵝對白 2.5.png"
+     class="ghost-second-dialogue ghost-second-dialogue-5"
+     alt="🥹">
+
+     <!-- 建立信任後：每次返嚟的對白 -->
+<img src="Image/幽靈企鵝對白 3.png"
+     class="ghost-return-dialogue"
+     alt="你返咗嚟">
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- RESEARCHER PENGUIN LAND -->
+<!-- ========================= -->
+
+<div id="researcher-land" class="land-screen hidden-land">
+
+    <div class="researcher-land-container">
+
+        <!-- 背景 -->
+        <img
+            src="Image/研究員企鵝領地 - 背景.png"
+            class="researcher-land-background"
+            alt="研究員企鵝領地"
+        >
+
+        <!-- 思考白板 -->
+        <img
+            src="Image/研究員企鵝領地 - 思考白版.png"
+            class="researcher-whiteboard"
+            alt="思考白板"
+        >
+
+        <!-- 思考白板 hotspot -->
+<div class="researcher-whiteboard-hotspot"></div>
+<img
+    id="researcher-whiteboard-dialogue"
+    src="Image/思考白版 1.png"
+    class="researcher-whiteboard-dialogue"
+    alt="思考白板內容"
+>
+
+        <!-- 研究資料庫 -->
+        <img
+            src="Image/研究員企鵝領地 - 研究資料庫.png"
+            class="researcher-database"
+            alt="研究資料庫"
+        >
+        <!-- 研究資料庫 hotspot -->
+<div class="researcher-database-hotspot"></div>
+<!-- 研究資料庫對話 scene -->
+<img
+    id="researcher-database-dialogue"
+    src="Image/資料庫 speech 1.png"
+    class="researcher-database-dialogue"
+    alt="研究資料庫內容"
+>
+<!-- speech 15：研究項目總覽 hotspot -->
+<div
+    id="researcher-project-hotspot"
+    class="researcher-project-hotspot"
+></div>
+<!-- 研究項目總覽 scene -->
+<img
+    id="researcher-project-overview"
+    src="Image/研究項目總覽 P.1.png"
+    class="researcher-project-overview"
+    alt="研究項目總覽"
+>
+
+        <!-- 書枱 -->
+        <img
+            src="Image/研究員企鵝領地 - 書枱.png"
+            class="researcher-desk"
+            alt="研究員書枱"
+        >
+       <!-- 筆記簿 hotspot -->
+<div class="researcher-notebook-hotspot"></div>
+
+<!-- 筆記簿 scene -->
+<img
+    id="researcher-notebook-dialogue"
+    src="Image/筆記簿 1.png"
+    class="researcher-notebook-dialogue"
+    alt="筆記簿內容"
+>
+
+<!-- Laptop hotspot -->
+<div class="researcher-laptop-hotspot"></div>
+
+<!-- Laptop scene -->
+<img
+    id="researcher-laptop-dialogue"
+    src="Image/laptop speech 1.png"
+    class="researcher-laptop-dialogue"
+    alt="Laptop內容"
+>
+<!-- Laptop Report 獨立畫面 -->
+<img
+    id="researcher-laptop-report"
+    src="Image/Project Development Report 1.png"
+    class="researcher-laptop-report"
+    alt="研究報告"
+>
+<!-- Laptop report hotspot -->
+<div class="researcher-laptop-report-hotspot"></div>
+
+<!-- 觀察之窗 -->
+<img
+    src="Image/研究員企鵝領地 - 觀察之窗.png"
+    class="researcher-window"
+    alt="觀察之窗"
+>
+
+<!-- 觀察之窗 hotspot -->
+<div class="researcher-window-hotspot"></div>
+
+<!-- 觀察之窗 scene -->
+<img
+    id="researcher-window-dialogue"
+    src="Image/觀察之窗 1.png"
+    class="researcher-window-dialogue"
+    alt="觀察之窗內容"
+>
+
+        <!-- 研究員企鵝 -->
+        <img
+            src="Image/研究員企鵝.png"
+            class="researcher-penguin"
+            alt="研究員企鵝"
+        >
+        <!-- 研究員企鵝 clickable hotspot -->
+<div class="researcher-penguin-hotspot"></div>
+
+        <!-- 研究員企鵝領地介紹 -->
+<img
+    id="researcher-intro"
+    src="Image/研究員企鵝 介紹 1.png"
+    class="researcher-intro"
+    alt="研究員企鵝領地介紹"
+>
+<button id="researcher-back-map">← 返回地圖</button>
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- DARK PENGUIN LAND -->
+<!-- ========================= -->
+
+<div id="dark-land" class="land-screen hidden-land">
+
+    <div class="dark-land-container">
+
+        <!-- 背景 -->
+        <img
+            src="Image/暗黑企鵝領地 - 背景.png"
+            class="dark-land-background"
+            alt="暗黑企鵝領地"
+        >
+<!-- 深淵之門 -->
+<img
+    src="Image/暗黑企鵝領地 - 深淵之門.png"
+    class="dark-item dark-abyss-door"
+    alt="深淵之門"
+>
+<!-- 深淵之門 hotspot -->
+<div class="dark-abyss-door-hotspot"></div>
+
+<!-- 深淵之門互動畫面 -->
+<img
+    id="dark-abyss-door-dialogue"
+    src="Image/深淵之門 1.png"
+    class="dark-abyss-door-dialogue"
+    alt="深淵之門"
+>
+
+<!-- 能量轉化器 -->
+<img
+    src="Image/暗黑企鵝領地 - 能量轉化器.png"
+    class="dark-item dark-energy-converter"
+    alt="能量轉化器"
+>
+
+<!-- 能量轉化器 hotspot -->
+<div class="dark-energy-converter-hotspot"></div>
+
+<!-- 能量轉化器對白 -->
+<img
+    id="dark-energy-converter-dialogue"
+    src="Image/能量轉化器 1.png"
+    class="dark-energy-converter-dialogue"
+    alt="能量轉化器對白"
+>
+
+<!-- 暗影鏡 -->
+<img
+    src="Image/暗黑企鵝領地 - 暗影鏡.png"
+    class="dark-item dark-shadow-mirror"
+    alt="暗影鏡"
+>
+
+<!-- 暗影鏡 hotspot -->
+<div class="dark-shadow-mirror-hotspot"></div>
+
+<!-- 情緒儲存箱 -->
+<img
+    src="Image/暗黑企鵝領地 - 情緒儲存箱.png"
+    class="dark-item dark-emotion-box"
+    alt="情緒儲存箱"
+>
+<!-- 情緒儲存箱 clickable hotspot -->
+<div class="dark-emotion-box-hotspot"></div>
+
+<!-- 情緒儲存箱互動畫面 -->
+<img
+    id="dark-emotion-box-dialogue"
+    src="Image/情緒儲存箱 1.png"
+    class="dark-emotion-box-dialogue"
+    alt="情緒儲存箱"
+>
+
+<!-- 暗黑企鵝 -->
+<img
+    src="Image/暗黑企鵝.png"
+    class="dark-penguin"
+    alt="暗黑企鵝"
+>
+<!-- 暗黑企鵝 clickable hotspot -->
+<div class="dark-penguin-hotspot"></div>
+
+<!-- 暗黑企鵝入場旁白 -->
+<img
+    id="dark-narration"
+    src="Image/暗黑企鵝 旁白.png"
+    class="dark-narration"
+    alt="暗黑企鵝旁白"
+>
+<!-- 暗黑企鵝首次介紹 scene -->
+<img
+    id="dark-intro-dialogue"
+    src="Image/亂入事件 1.png"
+    class="dark-intro-dialogue"
+    alt="暗黑企鵝介紹"
+>
+    <!-- 暗黑企鵝首次介紹 scene -->
+    <img
+        id="dark-intro-dialogue"
+        src="Image/亂入事件 1.png"
+        class="dark-intro-dialogue"
+        alt="暗黑企鵝介紹"
+    >
+
+    <!-- 暗黑筆記簿 hotspot -->
+<div class="dark-shadow-note-hotspot"></div>
+
+<!-- 暗黑筆記簿互動畫面 -->
+<img
+    id="dark-shadow-note-dialogue"
+    src="Image/暗黑筆記簿 1.png"
+    class="dark-shadow-note-dialogue"
+    alt="暗黑筆記簿"
+>
+
+<!-- 暗黑企鵝 Ending Speech -->
+<img
+    id="dark-ending-speech"
+    src="Image/暗黑企鵝 ending speech 1.png"
+    class="dark-ending-speech"
+    alt="暗黑企鵝 Ending Speech"
+>
+
+    <!-- 暗影鏡 scene -->
+    <img
+        id="dark-shadow-mirror-dialogue"
+        src="Image/暗影鏡 1.png"
+        class="dark-shadow-mirror-dialogue"
+        alt="暗影鏡內容"
+    >
+
+<!-- 返回地圖 -->
+<button id="dark-back-map" type="button">
+    返回地圖
+</button>
+
+</div>
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     保安企鵝領地
+     ============================== -->
+
+<div id="security-land" class="land-screen hidden-land">
+    <div class="security-land-container">
+
+        <!-- 背景 -->
+        <img
+            src="Image/保安企鵝領地 - 背景.png"
+            class="security-land-background"
+            alt="保安企鵝領地"
+        >
+
+        <!-- 瞭望台 -->
+        <img
+            src="Image/保安企鵝領地 - 瞭望台.png"
+            class="security-item security-watchtower"
+            alt="瞭望台"
+        >
+        <!-- 瞭望台 hotspot -->
+<div class="security-watchtower-hotspot"></div>
+
+<!-- 瞭望台互動畫面 -->
+<img
+    id="security-watchtower-dialogue"
+    src="Image/瞭望台 1.png"
+    class="security-watchtower-dialogue"
+    alt="瞭望台"
+>
+
+        <!-- 警報控制室 -->
+        <img
+            src="Image/保安企鵝領地 - 警報控制室.png"
+            class="security-item security-alarm-room"
+            alt="警報控制室"
+        >
+
+        <!-- 警報控制室 hotspot -->
+<div class="security-alarm-room-hotspot"></div>
+
+<!-- 警報控制室互動畫面 -->
+<img
+    id="security-alarm-room-dialogue"
+    src="Image/警報控制室 1.png"
+    class="security-alarm-room-dialogue"
+    alt="警報控制室"
+>
+
+        <!-- 邊境檢查站 -->
+        <img
+            src="Image/保安企鵝領地 - 邊境檢查站.png"
+            class="security-item security-border-checkpoint"
+            alt="邊境檢查站"
+        >
+
+        <!-- 邊境檢查站 hotspot -->
+<div class="security-border-checkpoint-hotspot"></div>
+
+<!-- 邊境檢查站互動畫面 -->
+<img
+    id="security-border-checkpoint-dialogue"
+    src="Image/邊境檢查站 1.png"
+    class="security-border-checkpoint-dialogue"
+    alt="邊境檢查站"
+>
+
+        <!-- 保安企鵝 -->
+        <img
+            src="Image/保安企鵝.png"
+            class="security-penguin"
+            alt="保安企鵝"
+        >
+        <!-- 保安企鵝 hotspot -->
+<div class="security-penguin-hotspot"></div>
+
+<!-- 保安企鵝 Opening -->
+<img
+    id="security-opening"
+    src="Image/保安企鵝 opening 1.png"
+    class="security-opening"
+    alt="保安企鵝 Opening"
+>
+<button id="security-back-map">
+    返回地圖
+</button>
+
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- CORNER PENGUIN LAND -->
+<!-- ============================== -->
+
+<div id="corner-land" class="land-screen hidden-land">
+    <div class="corner-land-container">
+
+        <!-- 背景 -->
+        <img
+            src="Image/角落企鵝領地 - 背景.png"
+            class="corner-land-background"
+            alt="角落企鵝領地"
+        >
+
+        <!-- 小窗戶 -->
+        <img
+            src="Image/角落企鵝領地 - 小窗戶.png"
+            class="corner-item corner-window"
+            alt="小窗戶"
+        >
+
+        <!-- 小窗戶 hotspot -->
+<div class="corner-window-hotspot"></div>
+
+<!-- 小窗戶互動畫面 -->
+<img
+    id="corner-window-dialogue"
+    src="Image/小窗戶 1.png"
+    class="corner-window-dialogue"
+    alt="小窗戶"
+>
+
+        <!-- 暖光小燈 -->
+        <img
+            src="Image/角落企鵝領地 - 暖光小燈.png"
+            class="corner-item corner-lamp"
+            alt="暖光小燈"
+        >
+
+        <!-- 暖光小燈 hotspot -->
+<div class="corner-lamp-hotspot"></div>
+
+<!-- 暖光小燈 dialogue -->
+<img
+    id="corner-lamp-dialogue"
+    src="Image/暖光小燈 1.png"
+    class="corner-lamp-dialogue"
+    alt="暖光小燈"
+>
+
+        <!-- 梳化 -->
+        <img
+            src="Image/角落企鵝領地 - 梳化.png"
+            class="corner-item corner-sofa"
+            alt="梳化"
+        >
+        <!-- 📦🐧 + 梳化 hotspot -->
+<div class="corner-penguin-hotspot"></div>
+
+<!-- 角落企鵝 intro -->
+<img
+    id="corner-intro-dialogue"
+    src="Image/角落企鵝 intro 1.png"
+    class="corner-intro-dialogue"
+    alt="角落企鵝介紹"
+>
+
+        <!-- 秘密小盒子 -->
+        <img
+            src="Image/角落企鵝領地 - 秘密小盒子.png"
+            class="corner-item corner-secret-box"
+            alt="秘密小盒子"
+        >
+        <!-- 秘密小盒子 hotspot -->
+<div class="corner-secret-box-hotspot"></div>
+
+<!-- 秘密小盒子 dialogue -->
+<img
+    id="corner-secret-box-dialogue"
+    src="Image/秘密小盒子 1.png"
+    class="corner-secret-box-dialogue"
+    alt="秘密小盒子"
+>
+<!-- 角落企鵝 random speech -->
+<img
+    id="corner-random-speech"
+    src="Image/角落企鵝 random speech.png"
+    class="corner-random-speech"
+    alt="角落企鵝 random speech"
+>
+
+<!-- 角落企鵝 ending -->
+<img
+    id="corner-ending"
+    src="Image/角落企鵝 ending.png"
+    class="corner-ending"
+    alt="角落企鵝 ending"
+>
+<!-- 返回地圖 -->
+<button id="corner-back-map">返回地圖</button>
+
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- MASK PENGUIN LAND -->
+<!-- ============================== -->
+
+<div id="mask-land" class="land-screen hidden-land">
+    <div class="mask-land-container">
+
+        <!-- 背景 -->
+        <img
+            src="Image/面具企鵝領地 - 背景.png"
+            class="mask-land-background"
+            alt="面具企鵝領地"
+        >
+
+        <!-- 面具牆 -->
+        <img
+            src="Image/面具企鵝領地 - 面具牆.png"
+            class="mask-item mask-wall"
+            alt="面具牆"
+        >
+
+        <!-- 面具牆 hotspot -->
+<div class="mask-wall-hotspot"></div>
+
+<!-- 面具牆互動畫面 -->
+<img
+    id="mask-wall-dialogue"
+    src="Image/面具牆 1.png"
+    class="mask-wall-dialogue"
+    alt="面具牆"
+>
+
+        <!-- 彩排區 -->
+        <img
+            src="Image/面具企鵝領地 - 彩排區.png"
+            class="mask-item mask-rehearsal"
+            alt="彩排區"
+        >
+
+        <!-- 彩排區 hotspot -->
+<div class="mask-rehearsal-hotspot"></div>
+
+<!-- 彩排區互動畫面 -->
+<img
+    id="mask-rehearsal-dialogue"
+    src="Image/彩排區 1.png"
+    class="mask-rehearsal-dialogue"
+    alt="彩排區"
+>
+
+<!-- 彩排區答案 hotspots -->
+<div class="mask-rehearsal-answer mask-rehearsal-answer-a"></div>
+<div class="mask-rehearsal-answer mask-rehearsal-answer-b"></div>
+<div class="mask-rehearsal-answer mask-rehearsal-answer-c"></div>
+
+        <!-- 換裝鏡 -->
+        <img
+            src="Image/面具企鵝領地 - 換裝鏡.png"
+            class="mask-item mask-dressing-mirror"
+            alt="換裝鏡"
+        >
+        <!-- 換裝鏡 hotspot -->
+<div class="mask-dressing-mirror-hotspot"></div>
+
+<!-- 換裝鏡互動畫面 -->
+<img
+    id="mask-dressing-mirror-dialogue"
+    src="Image/換裝鏡 1.png"
+    class="mask-dressing-mirror-dialogue"
+    alt="換裝鏡"
+>
+
+        <!-- 面具企鵝 -->
+        <img
+            src="Image/面具企鵝.png"
+            class="mask-penguin"
+            alt="面具企鵝"
+        >
+
+        <!-- 面具企鵝 hotspot -->
+<div class="mask-penguin-hotspot"></div>
+
+<!-- 面具企鵝介紹 -->
+<img
+    id="mask-intro"
+    src="Image/面具企鵝 intro 1.png"
+    class="mask-intro"
+    alt="面具企鵝介紹"
+>
+
+
+        <!-- 返回地圖 -->
+<button id="mask-back-map">返回地圖</button>
+    </div>
+</div>
+
+<!-- ============================== -->
+<!-- PENGUIN COUNCIL -->
+<!-- ============================== -->
+
+<div id="council-land" class="land-screen hidden-land">
+    <div class="council-land-container">
+
+        <img
+            id="council-scene"
+            src="Image/企鵝議會廳 1.png"
+            class="council-scene"
+            alt="企鵝議會廳"
+        >
+
+        <img
+            id="council-ending"
+            src="Image/結語 1.png"
+            class="council-ending"
+            alt="議會廳結語"
+        >
+
+        <!-- 坐低 button -->
+         <img
+             id="council-sit-button"
+             src="Image/企鵝議會廳 坐低 button.png"
+             class="council-sit-button"
+             alt="坐低"
+        >
+
+        <!-- 獨白 Video -->
+         <video
+            id="council-video"
+            class="council-video"
+            controls
+            playsinline
+        >
+    <source src="Image/獨白 Video.mp4" type="video/mp4">
+</video>
+
+
+        <button id="council-back-map">返回地圖</button>
+
+    </div>
+</div>
+
+
+
+    <!-- ========================= -->
+    <!-- SPECIAL ACCESS CHECK -->
+    <!-- ========================= -->
+
+    <div id="scan-popup" class="popup hidden">
+
+        <div class="popup-box">
+
+            <button
+                id="close-popup"
+                class="close-button">
+                ×
+            </button>
+
+            <div id="popup-content">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 驗證成功 -->
+    <!-- ========================= -->
+
+    <div id="success-popup" class="popup hidden">
+
+        <div class="popup-box success-box">
+
+            <h2>
+                ✓ 已驗證・歡迎獅子 🦁
+            </h2>
+
+            <p>
+                企鵝世界的大門
+                <br>
+                正在為你打開！
+            </p>
+
+            <button
+                id="continue-button"
+                class="continue-button">
+                繼續 ✨
+            </button>
+
+        </div>
+
+    </div>
+
+
+   <div id="save-indicator">進度已儲存 ✓</div>
+
+<audio id="beginning-bgm" loop>
+    <source src="Audio/Beginning.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="spoiled-bgm" loop>
+    <source src="Audio/👑🐧.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="ghost-bgm" src="Audio/👻🐧.mp3" loop></audio>
+
+<audio id="researcher-bgm" src="Audio/📚🐧.mp3" loop></audio>
+
+<audio id="corner-bgm" src="Audio/📦🐧.mp3" loop></audio>
+
+<audio id="security-bgm" src="Audio/🛡️🐧.mp3" loop></audio>
+
+<audio id="dark-bgm" src="Audio/🖤🐧.mp3" loop></audio>
+
+<audio id="mask-bgm" src="Audio/🎭🐧.mp3" loop></audio>
+
+<audio id="council-bgm" src="Audio/議會廳.mp3" loop></audio>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
