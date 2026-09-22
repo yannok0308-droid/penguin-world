@@ -4620,3 +4620,316 @@ function switchBgm(bgm) {
         });
     }
 }
+
+// =====================================================
+// PENGUIN WORLD PRELOADER - STAGE 1
+// =====================================================
+
+const loadingScreen = document.getElementById("loading-screen");
+const loadingBarFill = document.getElementById("loading-bar-fill");
+const loadingPercentage = document.getElementById("loading-percentage");
+const loadingMessage = document.getElementById("loading-message");
+
+const loadingMessages = [
+    "⋯⋯企鵝世界？邊度嚟㗎？",
+    "請帶好你嘅行裝⋯⋯",
+    "之前啲訪客好似唔俾入⋯⋯",
+    "聽講入面住咗好多企鵝⋯⋯",
+    "唔知今次俾唔俾入呢⋯⋯",
+    "前面好似有一道門⋯⋯",
+    "記得保管好你嘅通行證⋯⋯",
+    "聽講呢度唔係個個都搵得到⋯⋯",
+    "目的地好似愈嚟愈近啦⋯⋯"
+];
+
+let loadingMessageTimer = null;
+
+
+// ==============================
+// Random loading message
+// ==============================
+
+function startLoadingMessages() {
+
+    loadingMessageTimer = setInterval(function () {
+
+        const randomIndex =
+            Math.floor(Math.random() * loadingMessages.length);
+
+        loadingMessage.style.opacity = "0";
+
+        setTimeout(function () {
+            loadingMessage.textContent =
+                loadingMessages[randomIndex];
+
+            loadingMessage.style.opacity = "0.8";
+        }, 300);
+
+    }, 4500);
+}
+
+
+// ==============================
+// Council assets = Stage 2
+// ==============================
+
+function isCouncilAsset(path) {
+
+    return (
+        path.includes("Image/企鵝議會廳 1.png") ||
+        path.includes("Image/企鵝議會廳 2.png") ||
+        path.includes("Image/企鵝議會廳 坐低 button.png") ||
+        /Image\/結語 \d+\.png/.test(path) ||
+        path.includes("Image/獨白 Video.mp4") ||
+        path.includes("Audio/議會廳.mp3")
+    );
+}
+
+
+// ==============================
+// Find assets used by the game
+// ==============================
+
+async function collectStage1Assets() {
+
+    const assets = new Set();
+
+
+    // ----- Assets already written in HTML -----
+
+    document
+        .querySelectorAll("img[src], audio source[src]")
+        .forEach(function (element) {
+
+            const src = element.getAttribute("src");
+
+            if (
+                src &&
+                !isCouncilAsset(src)
+            ) {
+                assets.add(src);
+            }
+
+        });
+
+
+    // ----- Assets referenced inside script.js -----
+
+    try {
+
+        const response = await fetch("script.js", {
+            cache: "force-cache"
+        });
+
+        const scriptText = await response.text();
+
+        const assetRegex =
+            /(?:Image|Audio)\/[^"'`<>\n]+?\.(?:png|jpg|jpeg|webp|mp3)/gi;
+
+        const matches =
+            scriptText.match(assetRegex) || [];
+
+        matches.forEach(function (path) {
+
+            if (
+                !path.includes("${") &&
+                !isCouncilAsset(path)
+            ) {
+                assets.add(path);
+            }
+
+        });
+
+    } catch (error) {
+
+        console.warn(
+            "Could not scan script.js for preload assets:",
+            error
+        );
+    }
+
+
+    // ==============================
+    // Dark Penguin Shadow Mirror
+    // dynamically generated filenames
+    // ==============================
+
+    // 1–35
+    for (let i = 1; i <= 35; i++) {
+        assets.add(`Image/暗影鏡 ${i}.png`);
+    }
+
+    // 36–46 : Record 1
+    for (let i = 1; i <= 11; i++) {
+
+        const number = 35 + i;
+
+        assets.add(
+            `Image/暗影鏡 ${number} Record 1.${i}.png`
+        );
+    }
+
+    // 47–62 : Record 2
+    for (let i = 1; i <= 16; i++) {
+
+        const number = 46 + i;
+
+        assets.add(
+            `Image/暗影鏡 ${number} Record 2.${i}.png`
+        );
+    }
+
+    // 63–81 : Record 3
+    for (let i = 1; i <= 19; i++) {
+
+        const number = 62 + i;
+
+        assets.add(
+            `Image/暗影鏡 ${number} Record 3.${i}.png`
+        );
+    }
+
+    // 82–89
+    for (let i = 82; i <= 89; i++) {
+        assets.add(`Image/暗影鏡 ${i}.png`);
+    }
+
+
+    return Array.from(assets);
+}
+
+
+// ==============================
+// Load one asset
+// ==============================
+
+async function preloadOneAsset(url) {
+
+    try {
+
+        const response = await fetch(url, {
+            cache: "force-cache"
+        });
+
+        if (!response.ok) {
+            console.warn("Preload failed:", url);
+        }
+
+        // Important:
+        // consume the file so it is actually downloaded
+        await response.blob();
+
+    } catch (error) {
+
+        console.warn("Preload error:", url);
+
+    }
+}
+
+
+// ==============================
+// Stage 1 preload
+// ==============================
+
+async function startStage1Preload() {
+
+    startLoadingMessages();
+
+    const assets =
+        await collectStage1Assets();
+
+    console.log(
+        "🐧 Stage 1 assets:",
+        assets.length
+    );
+
+    let loaded = 0;
+
+    function updateProgress() {
+
+        loaded++;
+
+        const percent =
+            Math.round(
+                (loaded / assets.length) * 100
+            );
+
+        loadingBarFill.style.width =
+            percent + "%";
+
+        loadingPercentage.textContent =
+            percent + "%";
+    }
+
+
+    // Limit simultaneous downloads
+    // so slower Wi-Fi does not get overwhelmed
+
+    const queue = [...assets];
+
+    const workers = [];
+
+    const workerCount = 6;
+
+
+    async function worker() {
+
+        while (queue.length > 0) {
+
+            const url = queue.shift();
+
+            await preloadOneAsset(url);
+
+            updateProgress();
+        }
+    }
+
+
+    for (let i = 0; i < workerCount; i++) {
+        workers.push(worker());
+    }
+
+
+    await Promise.all(workers);
+
+
+    // ==============================
+    // Finished!
+    // ==============================
+
+    clearInterval(loadingMessageTimer);
+
+    loadingBarFill.style.width = "100%";
+    loadingPercentage.textContent = "100%";
+
+    loadingMessage.style.opacity = "0";
+
+    setTimeout(function () {
+
+        loadingMessage.textContent =
+            "到達企鵝世界啦！🐧";
+
+        loadingMessage.style.opacity = "0.8";
+
+    }, 300);
+
+
+    setTimeout(function () {
+
+        loadingScreen.classList.add(
+            "loading-finished"
+        );
+
+    }, 1000);
+
+
+    setTimeout(function () {
+
+        loadingScreen.style.display = "none";
+
+    }, 1700);
+}
+
+
+// START
+startStage1Preload();
