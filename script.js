@@ -122,16 +122,38 @@ const restartPanel3 =
     document.querySelector(".restart-panel-3");
 
 // =========================
-welcomeDialogue.addEventListener("click", function () {
-    welcomeDialogueIndex++;
+let welcomeDialogueLoading = false;
 
-    if (welcomeDialogueIndex < welcomeDialogues.length) {
-        welcomeDialogue.src = welcomeDialogues[welcomeDialogueIndex];
+welcomeDialogue.addEventListener("click", function () {
+
+    if (welcomeDialogueLoading) return;
+
+    const nextIndex = welcomeDialogueIndex + 1;
+
+    if (nextIndex < welcomeDialogues.length) {
+
+        welcomeDialogueLoading = true;
+
+        const nextImage = new Image();
+
+        nextImage.onload = function () {
+            welcomeDialogueIndex = nextIndex;
+            welcomeDialogue.src = welcomeDialogues[welcomeDialogueIndex];
+            welcomeDialogueLoading = false;
+        };
+
+        nextImage.onerror = function () {
+            welcomeDialogueLoading = false;
+        };
+
+        nextImage.src = welcomeDialogues[nextIndex];
+
     } else {
-        // 對話講完
+
+        welcomeDialogueIndex = nextIndex;
+
         welcomeDialogue.classList.add("hidden-dialogue");
 
-        // 等對話框淡出，再顯示「我準備好啦！」
         setTimeout(function () {
             readyButton.classList.remove("hidden-ready");
         }, 400);
@@ -562,24 +584,43 @@ councilSitButton.addEventListener("click", function () {
 territoryIcons.forEach(function (icon) {
     icon.classList.add("locked-intro");
 });
+
+
+let mapDialogueLoading = false;
+
 mapDialogue.addEventListener("click", function () {
 
-    // 已經講完 → 再撳都唔做任何事
-    if (mapIntroFinished) return;
+    if (mapIntroFinished || mapDialogueLoading) return;
 
-    mapDialogueIndex++;
+    const nextIndex = mapDialogueIndex + 1;
 
-    if (mapDialogueIndex < mapDialogues.length) {
-        mapDialogue.src = mapDialogues[mapDialogueIndex];
-  } else {
-    // 對白全部完成
-    mapIntroFinished = true;
+    if (nextIndex < mapDialogues.length) {
 
-    // 恢復所有領地顏色＋可以撳
-    territoryIcons.forEach(function (icon) {
-        icon.classList.remove("locked-intro");
-    });
-}
+        mapDialogueLoading = true;
+
+        const nextImage = new Image();
+
+        nextImage.onload = function () {
+            mapDialogueIndex = nextIndex;
+            mapDialogue.src = mapDialogues[mapDialogueIndex];
+            mapDialogueLoading = false;
+        };
+
+        nextImage.onerror = function () {
+            mapDialogueLoading = false;
+        };
+
+        nextImage.src = mapDialogues[nextIndex];
+
+    } else {
+
+        mapDialogueIndex = nextIndex;
+        mapIntroFinished = true;
+
+        territoryIcons.forEach(function (icon) {
+            icon.classList.remove("locked-intro");
+        });
+    }
 });
 
 // ==========================
@@ -4670,8 +4711,69 @@ function startLoadingMessages() {
 
 
 // ==============================
-// Council assets = Stage 2
+// STAGE 2 - COUNCIL ASSETS
 // ==============================
+
+const councilStage2Assets = [
+    "Image/企鵝議會廳 1.png",
+    "Image/企鵝議會廳 2.png",
+    "Image/企鵝議會廳 坐低 button.png",
+
+    ...Array.from(
+        { length: 21 },
+        (_, i) => `Image/結語 ${i + 1}.png`
+    ),
+
+    "Audio/議會廳.mp3",
+    "Image/獨白 Video.mp4"
+];
+
+let councilStage2Loaded = 0;
+let councilStage2Ready = false;
+let councilStage2Started = false;
+
+async function startCouncilStage2Preload() {
+
+    // 防止重複開始
+    if (councilStage2Started) return;
+
+    councilStage2Started = true;
+
+    console.log("🐧 Stage 2 Council preload started");
+
+    for (const url of councilStage2Assets) {
+
+        try {
+            const response = await fetch(url, {
+                cache: "force-cache"
+            });
+
+            if (!response.ok) {
+                console.warn("Stage 2 preload failed:", url);
+            } else {
+                await response.blob();
+            }
+
+        } catch (error) {
+            console.warn("Stage 2 preload error:", url);
+        }
+
+        councilStage2Loaded++;
+
+        const percent = Math.round(
+            (councilStage2Loaded / councilStage2Assets.length) * 100
+        );
+
+        console.log(
+            `🏛️ Council loading: ${percent}%`
+        );
+    }
+
+    councilStage2Ready = true;
+
+    console.log("🏛️ Council Stage 2 ready!");
+}
+
 
 function isCouncilAsset(path) {
 
@@ -4924,10 +5026,12 @@ async function startStage1Preload() {
 
 
     setTimeout(function () {
+    loadingScreen.style.display = "none";
 
-        loadingScreen.style.display = "none";
+    // Stage 1 完成後，背景準備議會廳
+    startCouncilStage2Preload();
 
-    }, 1700);
+}, 1700);
 }
 
 
