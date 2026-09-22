@@ -495,28 +495,67 @@ function checkCouncilUnlock() {
 }
 checkCouncilUnlock();
 
+function enterCouncilHall() {
+
+    // 🏛️ 議會廳 BGM
+    switchBgm(councilBgm);
+
+    if (councilEndingFinished) {
+        councilScene.src = "Image/企鵝議會廳 2.png";
+        councilScene.style.display = "block";
+        councilEnding.style.display = "none";
+        councilSitButton.style.display = "block";
+        councilBackMap.style.display = "block";
+    }
+
+    // 進入議會廳
+    mapScreen.classList.add("hidden-map");
+    councilLand.classList.remove("hidden-land");
+}
+
 councilIcon.addEventListener("click", function () {
+
     if (!mapIntroFinished) return;
 
-    // 未完成七個領地 → 暫時唔俾入
+    // 七個領地未完成
     if (councilIcon.classList.contains("council-locked")) {
         return;
     }
 
-        // 🏛️ 議會廳 BGM
-    switchBgm(councilBgm);
+    // Stage 2 已準備好 → 直接入議會廳
+    if (councilStage2Ready) {
+        enterCouncilHall();
+        return;
+    }
 
-    if (councilEndingFinished) {
-    councilScene.src = "Image/企鵝議會廳 2.png";
-    councilScene.style.display = "block";
-    councilEnding.style.display = "none";
-    councilSitButton.style.display = "block";
-    councilBackMap.style.display = "block";
-}
+    // Stage 2 未完成 → 顯示 loading
+    councilLoadingScreen.classList.add("active");
 
-// 進入議會廳
-mapScreen.classList.add("hidden-map");
-councilLand.classList.remove("hidden-land");
+    const currentPercent = Math.round(
+        (councilStage2Loaded / councilStage2Assets.length) * 100
+    );
+
+    councilLoadingBarFill.style.width = currentPercent + "%";
+    councilLoadingPercentage.textContent = currentPercent + "%";
+
+    clearInterval(councilLoadingMessageTimer);
+
+    councilLoadingMessageTimer = setInterval(function () {
+
+        const randomIndex = Math.floor(
+            Math.random() * councilLoadingMessages.length
+        );
+
+        councilLoadingMessage.style.opacity = "0";
+
+        setTimeout(function () {
+            councilLoadingMessage.textContent =
+                councilLoadingMessages[randomIndex];
+
+            councilLoadingMessage.style.opacity = "0.8";
+        }, 300);
+
+    }, 4000);
 });
 
 councilBackMap.addEventListener("click", function () {
@@ -4732,6 +4771,32 @@ let councilStage2Loaded = 0;
 let councilStage2Ready = false;
 let councilStage2Started = false;
 
+const councilLoadingScreen =
+    document.getElementById("council-loading-screen");
+
+const councilLoadingBarFill =
+    document.getElementById("council-loading-bar-fill");
+
+const councilLoadingPercentage =
+    document.getElementById("council-loading-percentage");
+
+const councilLoadingMessage =
+    document.getElementById("council-loading-message");
+
+const councilLoadingMessages = [
+    "👑🐧 任性企鵝又走咗去邊玩？",
+    "📚🐧 研究員企鵝話做埋手頭上少少嘢就過嚟⋯⋯",
+    "🎭🐧 面具企鵝仲喺塊鏡前面整理緊蝴蝶結⋯⋯",
+    "🛡️🐧 保安企鵝話要巡多次邊境先過嚟。",
+    "📦🐧 角落企鵝話⋯⋯坐多陣就嚟。",
+    "👻🐧 幽靈企鵝⋯⋯頭先明明仲見到佢㗎？",
+    "🖤🐧 暗黑企鵝話佢會嚟。只係⋯⋯叫我哋唔好催佢。",
+    "好似仲爭一隻企鵝⋯⋯",
+    "好似就快齊人啦⋯⋯"
+];
+
+let councilLoadingMessageTimer = null;
+
 async function startCouncilStage2Preload() {
 
     // 防止重複開始
@@ -4764,6 +4829,9 @@ async function startCouncilStage2Preload() {
             (councilStage2Loaded / councilStage2Assets.length) * 100
         );
 
+        councilLoadingBarFill.style.width = percent + "%";
+        councilLoadingPercentage.textContent = percent + "%";
+
         console.log(
             `🏛️ Council loading: ${percent}%`
         );
@@ -4771,7 +4839,34 @@ async function startCouncilStage2Preload() {
 
     councilStage2Ready = true;
 
-    console.log("🏛️ Council Stage 2 ready!");
+console.log("🏛️ Council Stage 2 ready!");
+
+if (councilLoadingScreen.classList.contains("active")) {
+
+    clearInterval(councilLoadingMessageTimer);
+
+    councilLoadingBarFill.style.width = "100%";
+    councilLoadingPercentage.textContent = "100%";
+
+    councilLoadingMessage.textContent =
+        "好啦，七隻企鵝都到齊啦。";
+
+    setTimeout(function () {
+
+        councilLoadingScreen.classList.add("loading-finished");
+
+        setTimeout(function () {
+            councilLoadingScreen.classList.remove(
+                "active",
+                "loading-finished"
+            );
+
+            enterCouncilHall();
+
+        }, 600);
+
+    }, 900);
+}
 }
 
 
